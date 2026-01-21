@@ -45,7 +45,7 @@ pipeline{
      stage("Run Container"){
             steps{
                 sh ''' 
-                docker run -d -p 3000:80 --name $CONT_NAME $IMAGE_NAME'''
+                docker run -d -p 3000:80 --name $CONT_NAME $IMAGE_NAME  '''
             }
      }
     post{
