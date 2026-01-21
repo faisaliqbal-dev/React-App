@@ -1,8 +1,8 @@
 pipeline{
     agent any
     environment {
-        IMAGE_NAME = react-app
-        CONT_NAME = react-app-cont
+        IMAGE_NAME = "react-app"
+        CONT_NAME = "react-app-cont"
     }
     stages{
         stage("Install"){
@@ -27,7 +27,7 @@ pipeline{
                 sh 'npm run build'
             }
      }
-      stage("Install"){
+      stage("Docker Login"){
             steps{
                  withDockerRegistry(credentialsId: 'Docker-Cred', url: '.') {
           }
