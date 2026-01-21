@@ -1,0 +1,63 @@
+pipeline{
+    agent any
+    environment {
+        IMAGE_NAME = "react-app"
+        CONT_NAME = "react-app-cont"
+    }
+    stages{
+        stage("Install"){
+            steps{
+                sh 'npm install'
+            }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
+        }
+    
+     stage("Build"){
+            steps{
+                sh 'npm run build'
+            }
+     }
+      stage("Docker login"){
+            steps{
+                 withDockerRegistry(credentialsId: 'Docker-Cred', url: '') {
+          }
+         }
+            }
+       stage("Build And push Image"){
+            steps{
+                sh '''
+                docker built -t mohammedfaisaliqbal/$IMAGE_NAME:latest -f Dockerfile1 .
+                docker stop $CONT_NAME
+                docker rm $CONT_NAME   
+                '''
+            }
+     }
+     stage("Run Container"){
+            steps{
+                sh ''' 
+                docker run -d -p 3000:80 --name $CONT_NAME $IMAGE_NAME'''
+            }
+     }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+ }
+}
