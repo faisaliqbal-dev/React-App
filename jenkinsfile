@@ -48,6 +48,7 @@ pipeline{
                 docker run -d -p 3000:80 --name $CONT_NAME $IMAGE_NAME'''
             }
      }
+}
     post{
         always{
             echo "========always========"
@@ -60,4 +61,3 @@ pipeline{
         }
     }
  }
-}
