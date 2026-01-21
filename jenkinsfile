@@ -37,8 +37,7 @@ pipeline{
             steps{
                 sh '''
                 docker build -t mohammedfaisaliqbal/$IMAGE_NAME:latest -f Dockerfile1 .
-                docker stop $CONT_NAME
-                docker rm $CONT_NAME   
+                
                 '''
             }
      }
